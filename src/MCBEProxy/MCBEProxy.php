@@ -17,10 +17,9 @@
 
 namespace MCBEProxy;
 
-use MCBEProxy\utils\Binary;
+use MCBEProxy\utils\CommandReader;
 use MCBEProxy\utils\Config;
 use MCBEProxy\utils\MainLogger;
-use MCBEProxy\utils\CommandReader;
 use MCBEProxy\utils\SocketReader;
 
 class MCBEProxy{
@@ -49,7 +48,6 @@ class MCBEProxy{
         });
 
         $this->path = $path;
-
         self::$interface = clone $this;
 
         $this->config = new Config($this->path.DIRECTORY_SEPARATOR . "config.json", [
@@ -62,13 +60,11 @@ class MCBEProxy{
         $this->config->save();
 
         $this->logger = new MainLogger($this->path, $this->config->get("debuglevel"));
-
         $this->logger->info("MCBEProxy starting now...");
 
         $this->working = true;
 
         $this->commandreader = new CommandReader();
-
         $this->socketreader = new SocketReader($this->logger, $this->config->get("host"), $this->config->get("port"), $this->config->get("serverip"), $this->config->get("serverport"));
 
         $this->logger->info("MCBEProxy start!");
@@ -101,15 +97,11 @@ class MCBEProxy{
                         switch($line[1]){
                             case "stop":
                             case "shutdown":
-                                echo "解析を終了します\n";
-                            break;
-
-                            case "address":
-                                echo "デフォルト受信アドレスを変更します。\n";
+                                echo "Shutdown system.\n";
                             break;
                         }
                     }else{
-                        echo "使用できるコマンド\n-stop\n-shutdown : 解析を終了します\n-address : デフォルト受信アドレスを変更します。\n";
+                        echo "Usage:\n-stop\n-shutdown : Shutdown system.\n";
                     }
                 default:
                     echo "UnknownCommand: " . $line[0] . "\n";
@@ -122,6 +114,6 @@ class MCBEProxy{
         $this->working = false;
         $this->config->save();
         $this->socketreader->shutdown();
-        $this->logger->info("Shutdown a system now.. . ");
+        $this->logger->info("Shutdown a system now...");
     }
 }

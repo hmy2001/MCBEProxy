@@ -51,6 +51,8 @@ class Session{
 	}
 
 	public function close($value){
+		$this->logger->debug("Closed Session.");
+
 		socket_close($this->serverSocket);
 	}
 

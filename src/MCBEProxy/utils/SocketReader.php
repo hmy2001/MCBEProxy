@@ -51,7 +51,7 @@ class SocketReader{
 		$bytes = $this->receiveClientSocket($buffer, $address, $port);
 		if($bytes !== false){
 			if(!isset($this->sessions[$address.":".$port])){
-				echo $address.":".$port." からデータが送られてきました。\n";
+				$this->logger->info($address.":".$port." からデータが送られてきました。");
 
 				$this->sessions[$address.":".$port] = new Session($this->logger, $this->host, $this->serverip, $this->serverport);
 			}
@@ -82,6 +82,8 @@ class SocketReader{
 	public function shutdown(){
 		$this->working = false;
 		socket_close($this->clientSocket);
+
+		$this->logger->debug("Closed Socket.");
 		
 		foreach($this->sessions as $value => $session){
 			$session->close($value);
