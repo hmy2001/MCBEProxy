@@ -17,7 +17,6 @@
 
 namespace MCBEProxy;
 
-use MCBEProxy\protocol\PacketAnalyze;
 use MCBEProxy\utils\Binary;
 use MCBEProxy\utils\Config;
 use MCBEProxy\utils\MainLogger;

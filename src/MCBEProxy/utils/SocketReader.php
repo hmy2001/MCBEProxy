@@ -27,7 +27,6 @@ class SocketReader{
 		$this->serverip = gethostbyname($serverip);
 		$this->serverport = $serverport;
 
-
 		$this->clientSocket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 		if(@socket_bind($this->clientSocket, $host, $port) === true){
 			$this->logger->debug("socket open (".$host.":".$port.")");

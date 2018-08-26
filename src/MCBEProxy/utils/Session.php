@@ -17,9 +17,9 @@
 
 namespace MCBEProxy\utils;
 
-use MCBEProxy\protocol\PacketAnalyze;
-
 class Session{
+	public $working = true;
+
 	public function __construct($logger, $host, $serverip, $serverport){
 		$this->serverip = $serverip;
 		$this->serverport = (int) $serverport;
@@ -33,8 +33,6 @@ class Session{
 			echo "Error\n";
 		}
 		socket_set_nonblock($this->serverSocket);
-
-		//$this->packetanalyze = new PacketAnalyze($this->logger);
 	}
 
 	public function sendServerSocket($buffer){
